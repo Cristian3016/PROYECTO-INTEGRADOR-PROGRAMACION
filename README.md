@@ -1,10 +1,11 @@
 # Nombre de los intengrantes del grupo:
 
-1)-Cristian Caro
-2)-Esteban Vera
-3)-Fabricio Vargas
-4)-Vanesa Gimenez
-5)- Stefania Silva
+1) Cristian Caro
+2) Esteban Vera
+3) Fabricio Vargas
+4) Vanesa Gimenez
+5) Stefania Silva
+6) German Figueroa
 
 # Frontend del Proyecto
 
