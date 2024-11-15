@@ -1,0 +1,20 @@
+<div class="menu">
+  <h2>Nuestro Menú</h2>
+  
+  <div *ngFor="let categoria of categorias" class="categoria">
+    <h3>{{ categoria.nombre }}</h3>
+    <div class="productos-grid">
+      <div *ngFor="let producto of categoria.productos" class="producto-card">
+        <img [src]="producto.imagen" [alt]="producto.nombre" class="producto-imagen">
+        <div class="producto-info">
+          <h4>{{ producto.nombre }}</h4>
+          <p class="descripcion">{{ producto.descripcion }}</p>
+          <p class="precio">${{ producto.precio }}</p>
+          <button (click)="agregarAlCarrito(producto.id)" class="agregar-btn">
+            Agregar al Carrito
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

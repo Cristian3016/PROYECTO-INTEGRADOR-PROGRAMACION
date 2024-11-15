@@ -1,0 +1,13 @@
+<div class="confirmacion">
+  <h2>Confirmación de Pedido</h2>
+  
+  <div class="form-group">
+    <label for="entrega">Método de Entrega:</label>
+    <select id="entrega" [(ngModel)]="seleccionEntrega">
+      <option value="">Seleccione una opción</option>
+      <option *ngFor="let opcion of opcionesEntrega" [value]="opcion">
+        {{ opcion }}
+      </option>
+    </select>
+  </div>
+</div>

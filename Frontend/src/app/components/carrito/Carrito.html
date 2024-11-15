@@ -1,0 +1,22 @@
+<div class="carrito">
+  <h2>Carrito de Compras</h2>
+  
+  <ng-container *ngIf="productos$ | async as productos">
+    <div *ngIf="productos.length === 0" class="empty-cart">
+      <p>No hay productos en el carrito</p>
+    </div>
+
+    <div *ngFor="let producto of productos" class="producto-item">
+      <div class="producto-info">
+        <span class="producto-nombre">{{ producto.nombre }}</span>
+        <span class="producto-cantidad">Cantidad: {{ producto.cantidad }}</span>
+        <span class="producto-precio">${{ producto.precio * producto.cantidad }}</span>
+      </div>
+      <button class="eliminar-btn" (click)="eliminarProducto(producto.id)">Eliminar</button>
+    </div>
+
+    <div *ngIf="productos.length > 0" class="carrito-total">
+      <h3>Total: ${{ total }}</h3>
+    </div>
+  </ng-container>
+</div>

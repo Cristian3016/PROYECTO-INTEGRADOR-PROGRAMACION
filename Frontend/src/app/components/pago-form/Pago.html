@@ -1,0 +1,110 @@
+<form [formGroup]="pagoForm" class="pago-form">
+  <h2>Forma de Pago</h2>
+  
+  <div class="form-group">
+    <label for="tipoPago">Tipo de Pago</label>
+    <select id="tipoPago" (change)="onTipoPagoChange($event)" [disabled]="pagoConfirmado">
+      <option value="efectivo">Efectivo</option>
+      <option value="tarjeta">Tarjeta</option>
+    </select>
+  </div>
+
+  <div class="total-section">
+    <h3>Total a Pagar: ${{ total | number:'1.2-2' }}</h3>
+  </div>
+
+  <div *ngIf="tipoPago === 'efectivo'" class="payment-section">
+    <div class="form-group">
+      <label for="montoEfectivo">Monto en Efectivo</label>
+      <input 
+        id="montoEfectivo" 
+        formControlName="montoEfectivo" 
+        type="number" 
+        [placeholder]="'Mínimo $' + total"
+        [ngClass]="{ 'invalid': submitted && f['montoEfectivo'].errors }"
+        [disabled]="pagoConfirmado"
+      />
+      <div *ngIf="submitted && f['montoEfectivo'].errors" class="error-message">
+        <div *ngIf="f['montoEfectivo'].errors['required']">El monto es requerido</div>
+        <div *ngIf="f['montoEfectivo'].errors['min']">El monto debe ser igual o mayor al total</div>
+      </div>
+      <div *ngIf="getVuelto() > 0" class="vuelto-info">
+        Su vuelto será: ${{ getVuelto() | number:'1.2-2' }}
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="tipoPago === 'tarjeta'" class="payment-section">
+    <div class="form-group">
+      <label for="numeroTarjeta">Número de Tarjeta</label>
+      <input 
+        id="numeroTarjeta" 
+        formControlName="numeroTarjeta" 
+        type="text" 
+        placeholder="1234567890123456"
+        [ngClass]="{ 'invalid': submitted && f['numeroTarjeta'].errors }"
+        [disabled]="pagoConfirmado"
+      />
+      <div *ngIf="submitted && f['numeroTarjeta'].errors" class="error-message">
+        <div *ngIf="f['numeroTarjeta'].errors['required']">El número de tarjeta es requerido</div>
+        <div *ngIf="f['numeroTarjeta'].errors['pattern']">Ingrese un número de tarjeta válido (16 dígitos)</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="nombreTitular">Nombre del Titular</label>
+      <input 
+        id="nombreTitular" 
+        formControlName="nombreTitular" 
+        type="text" 
+        placeholder="Nombre como aparece en la tarjeta"
+        [ngClass]="{ 'invalid': submitted && f['nombreTitular'].errors }"
+        [disabled]="pagoConfirmado"
+      />
+      <div *ngIf="submitted && f['nombreTitular'].errors" class="error-message">
+        <div *ngIf="f['nombreTitular'].errors['required']">El nombre del titular es requerido</div>
+        <div *ngIf="f['nombreTitular'].errors['minlength']">El nombre debe tener al menos 3 caracteres</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="fechaVencimiento">Fecha de Vencimiento</label>
+      <input 
+        id="fechaVencimiento" 
+        formControlName="fechaVencimiento" 
+        type="text" 
+        placeholder="MM/AAAA"
+        [ngClass]="{ 'invalid': submitted && f['fechaVencimiento'].errors }"
+        [disabled]="pagoConfirmado"
+      />
+      <div *ngIf="submitted && f['fechaVencimiento'].errors" class="error-message">
+        <div *ngIf="f['fechaVencimiento'].errors['required']">La fecha de vencimiento es requerida</div>
+        <div *ngIf="f['fechaVencimiento'].errors['pattern']">Formato inválido. Use MM/AAAA</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="cvc">CVC</label>
+      <input 
+        id="cvc" 
+        formControlName="cvc" 
+        type="text" 
+        placeholder="123"
+        [ngClass]="{ 'invalid': submitted && f['cvc'].errors }"
+        [disabled]="pagoConfirmado"
+      />
+      <div *ngIf="submitted && f['cvc'].errors" class="error-message">
+        <div *ngIf="f['cvc'].errors['required']">El CVC es requerido</div>
+        <div *ngIf="f['cvc'].errors['pattern']">El CVC debe tener 3 o 4 dígitos</div>
+      </div>
+    </div>
+  </div>
+
+  <button 
+    type="button" 
+    (click)="onSubmit()" 
+    [disabled]="pagoConfirmado"
+    [ngClass]="{'confirmed': pagoConfirmado}">
+    {{ pagoConfirmado ? '¡Pago Confirmado!' : 'Confirmar Pago' }}
+  </button>
+</form>
